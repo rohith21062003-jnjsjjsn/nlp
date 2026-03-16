@@ -1,0 +1,18 @@
+import pandas as pd
+import pickle
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+# Load dataset
+df = pd.read_excel("P652-Dataset.xlsx")
+
+# Combine text columns
+df['review'] = df['title'] + " " + df['body']
+
+# Initialize TF-IDF vectorizer
+vectorizer = TfidfVectorizer(stop_words='english')
+
+# Fit vectorizer
+X = vectorizer.fit_transform(df['review'])
+
+# Save vectorizer
+pickle.dump(vectorizer, open("vectorizer.pkl", "wb"))
